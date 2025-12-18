@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect, useState, useCallback } from "react"
 import { motion, useInView } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Award, Clock, Shield, Heart, Sparkles, CheckCircle2 } from "lucide-react"
@@ -29,14 +29,14 @@ export default function WhyChoose() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
-  const onSelect = () => {
+  const onSelect = useCallback(() => {
     if (!emblaApi) return
     const selected = emblaApi.selectedScrollSnap()
     // Calcula o índice real considerando o loop infinito
     // Garante que o índice seja sempre entre 0 e reasons.length - 1
     const realIndex = ((selected % reasons.length) + reasons.length) % reasons.length
     setSelectedIndex(realIndex)
-  }
+  }, [emblaApi])
 
   useEffect(() => {
     if (!emblaApi) return
@@ -62,7 +62,7 @@ export default function WhyChoose() {
       emblaApi.off("reInit", onSelect)
       emblaApi.off("settle", onSelect)
     }
-  }, [emblaApi])
+  }, [emblaApi, onSelect])
 
   return (
     <section ref={ref} className="py-20 bg-white relative z-10 overflow-hidden">
