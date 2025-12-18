@@ -117,7 +117,7 @@ export default function Stats() {
                   }}
                   className="text-5xl md:text-6xl font-extrabold text-white mb-4 drop-shadow-[0_0_20px_rgba(127,179,179,0.5)]"
                 >
-                  <AnimatedNumber value={stat.number} delay={index * 0.1 + 0.3} suffix={stat.suffix || undefined} />
+                  <AnimatedNumber value={stat.number} delay={index * 0.1 + 0.3} suffix={(stat as { suffix?: string }).suffix} />
                 </motion.div>
                 <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#7fb3b3] transition-colors duration-300">
                   {stat.label}
